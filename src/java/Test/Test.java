@@ -18,7 +18,7 @@ import util.HibernateUtil;
 
 /**
  *
- * @author kawta
+ * @author SIMO
  */
 public class Test {
     public static void main(String[] args) {

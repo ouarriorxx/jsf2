@@ -23,7 +23,7 @@ import service.ServiceService;
 
 /**
  *
- * @author kawta
+ * @author oussama
  */
 @ManagedBean(name = "employeBean")
 public class EmployeBean {
@@ -51,7 +51,7 @@ public class EmployeBean {
     
 
        public void onEdit(RowEditEvent event) {
-           System.out.println("kkkkkkkkkkkkkkkkkk");
+           
         employe = (Employe) event.getObject();
         Service service = ss.getById(this.employe.getService().getId());
         employe.setService(service);
@@ -71,7 +71,7 @@ public class EmployeBean {
     }
 
     public void onDeleteAction() {
-        System.out.println("mmmmmmmmmmmmmmmmmmmmmmmmm");
+        
          Employe e = se.getById(employe.getId());
          System.out.println(e);
          se.delete(e);
@@ -224,3 +224,4 @@ public class EmployeBean {
 
     
 }
+

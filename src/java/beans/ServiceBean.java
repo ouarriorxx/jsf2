@@ -9,11 +9,14 @@ import entities.Employe;
 import entities.Service;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.crypto.SealedObject;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import org.primefaces.event.RowEditEvent;
+import org.primefaces.model.DefaultTreeNode;
+import org.primefaces.model.TreeNode;
 import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartModel;
@@ -24,7 +27,7 @@ import sun.font.EAttribute;
 
 /**
  *
- * @author kawta
+ * @author oussama
  */
 @ManagedBean
 public class ServiceBean {
@@ -36,6 +39,7 @@ public class ServiceBean {
  private static ChartModel barModel;
  private Employe employe;
  private ServiceEmploye se;
+    private Object serviceService;
   
 
     /**
@@ -163,6 +167,39 @@ public class ServiceBean {
 
     public void setSe(ServiceEmploye se) {
         this.se = se;
+    }
+    
+     private TreeNode root;
+     
+    
+    
+    @PostConstruct
+    public void init() {
+        root = new DefaultTreeNode("Root", null);
+
+        List<Service> services = ss.getAll();
+
+        for (Service service : services) {
+            TreeNode serviceNode = new DefaultTreeNode(service.getCode(), root);
+
+            List<Employe> employees = se.getEmployeesByService(service);
+
+            for (Employe employee : employees) {
+                if (employee.getChef() == null) {
+                    TreeNode chefNode = new DefaultTreeNode(employee.getNom()+" "+employee.getPrenom(), serviceNode);
+
+                    List<Employe> managedEmployees =se.getManagedEmployees(employee);
+
+                    for (Employe managedEmployee : managedEmployees) {
+                        new DefaultTreeNode(managedEmployee.getNom()+" "+managedEmployee.getPrenom(), chefNode);
+                    }
+                }
+            }
+        }
+
+    }
+    public TreeNode getRoot() {
+        return root;
     }
     
        

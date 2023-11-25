@@ -16,7 +16,7 @@ import util.HibernateUtil;
 
 /**
  *
- * @author kawta
+ * @author oussama
  */
 public class ServiceService implements IDao<Service>{
     @Override
